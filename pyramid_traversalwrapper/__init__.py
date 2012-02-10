@@ -29,7 +29,10 @@ class ModelGraphTraverser(object):
             matchdict = environ['bfg.routes.matchdict']
             path = matchdict.get('traverse', '/')
             subpath = matchdict.get('subpath', '')
-            subpath = tuple(filter(None, subpath.split('/')))
+            if subpath and isinstance(subpath, str):
+                subpath = subpath.split('/')
+
+            subpath = tuple(filter(None, subpath))
         else:
             # this request did not match a Routes route
             subpath = ()
